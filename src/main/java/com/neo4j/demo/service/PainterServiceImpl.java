@@ -16,6 +16,11 @@ public class PainterServiceImpl implements PainterService {
     }
 
     @Override
+    public List<Painter> findAll() {
+        return repository.findAll();
+    }
+
+    @Override
     public String findSameEraPainters(String name) {
         Painter painter = repository.findByName(name);
         final Long Id = painter.getId();

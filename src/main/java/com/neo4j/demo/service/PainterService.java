@@ -10,4 +10,5 @@ import java.util.List;
 @Service
 public interface PainterService {
     public String findSameEraPainters(String name);
+    public List<Painter> findAll();
 }

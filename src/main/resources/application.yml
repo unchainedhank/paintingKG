@@ -10,7 +10,3 @@ spring:
       password: blackarrow1
   thymeleaf:
     cache: false
-    check-template-location: true
-    encoding: UTF-8
-    mode: HTML5
-    prefix: classpath:/templates #模版存放路径

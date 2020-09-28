@@ -14,4 +14,6 @@ public interface PainterRepository extends Neo4jRepository<Painter,Long> {
     Painter findByName(@Param("name") String name);
     @Query("MATCH (painter1 : Painter)-[SAME_ERA]->(painter2 : Painter) WHERE painter1.name = {name} RETURN painter1,painter2")
     List<Painter> findByNameAndSameEraPainters(@Param("name") String name);
+    @Query("MATCH (p : Painter) RETURN p")
+    List<Painter> findAll();
 }

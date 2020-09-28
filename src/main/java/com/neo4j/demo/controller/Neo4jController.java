@@ -3,6 +3,7 @@ package com.neo4j.demo.controller;
 import com.neo4j.demo.repository.PainterRepository;
 import com.neo4j.demo.service.PainterServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,19 +19,18 @@ public class Neo4jController {
         return service.findSameEraPainters(name);
     }
 
+
+
+
+//    @RequestMapping(value = "/register", method = RequestMethod.GET)
+//    public String index(Model model) {
+//        model.addAttribute("painters",service.findAll());
+//        return "thymeleaf";
+//    }
+
 //    public String findPainterByName(@PathVariable String name) {
 //        return painterRepository.findByNameAndSameEraPainters(name).toString();
 //    }
-
-
-
-
-    @RequestMapping(value = "/")
-    //测试用例
-    @GetMapping("hello")
-    public String hello() {
-        return "hello";
-    }
 
 
 //    @GetMapping("/h")
