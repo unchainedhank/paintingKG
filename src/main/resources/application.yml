@@ -1,0 +1,16 @@
+#spring.data.neo4j.uri=bolt://localhost
+#spring.data.neo4j.username=neo4j
+#spring.data.neo4j.password=blackarrow1
+#
+spring:
+  data:
+    neo4j:
+      uri: bolt://localhost
+      username: neo4j
+      password: blackarrow1
+  thymeleaf:
+    cache: false
+    check-template-location: true
+    encoding: UTF-8
+    mode: HTML5
+    prefix: classpath:/templates #模版存放路径
