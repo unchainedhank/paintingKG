@@ -2,7 +2,7 @@ package com.neo4j.demo.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.neo4j.demo.domain.DomainNode;
+import com.neo4j.demo.entity.node.Painter;
 import com.neo4j.demo.service.PainterService;
 import com.neo4j.demo.service.PaintingService;
 import org.springframework.web.bind.annotation.*;
@@ -35,11 +35,17 @@ public class PaintKGController {
     }
 
     @RequestMapping(value = "/id-graph", headers = {"id","type"}, method = RequestMethod.GET)
-    public String findGraphById(@RequestHeader("type") int type, @RequestHeader("id") Long id) throws JsonProcessingException {
+    public Object findGraphById(@RequestHeader("type") int type, @RequestHeader("id") Long id) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
+//        return type==1?
+//                mapper.writeValueAsString(painterService.findRelatedPainters(id))+mapper.writeValueAsString(painterService.findRelatedPaintings(id)):
+//                mapper.writeValueAsString(paintingService.findRelatedPaintings(id));
+        if (type ==1) {
+            List<Painter> relatedPainters = painterService.findRelatedPainters(id);
+            for (Painter painter:
+                 relatedPainters) {
 
-        String JsonRelatedPainters =  mapper.writeValueAsString(painterService.findRelatedPainters(id));
-        String JsonRelatedPaintings = mapper.writeValueAsString(paintingService.findRelatedPaintings(id));
-        return JsonRelatedPainters + JsonRelatedPaintings;
+            }
+        }
     }
 }
