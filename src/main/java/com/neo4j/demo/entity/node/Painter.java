@@ -28,11 +28,6 @@ public class Painter {
         return "{" +
                 "id:" + id +"\n"+
                 ", name:'" + name + '\'' +"\n"+
-                ", country:'" + country + '\'' +"\n"+
-                ", birth:" + birth +"\n"+
-                ", death:'" + death + '\'' +"\n"+
-                ", description:'" + description + '\'' +"\n"+
-                ", image:'" + image + '\'' +"\n"+
                 '}';
     }
 

@@ -1,19 +1,16 @@
 package com.neo4j.demo.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.neo4j.demo.entity.node.Painter;
 import com.neo4j.demo.service.PainterService;
 import com.neo4j.demo.service.PaintingService;
+import com.neo4j.demo.util.NodeUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class PaintKGController {
-//    PainterRepository painterRepository;
     @Resource
     private PainterService painterService;
     @Resource
@@ -35,17 +32,13 @@ public class PaintKGController {
     }
 
     @RequestMapping(value = "/id-graph", headers = {"id","type"}, method = RequestMethod.GET)
-    public Object findGraphById(@RequestHeader("type") int type, @RequestHeader("id") Long id) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
+    public String findGraphById(@RequestHeader("type") int type, @RequestHeader("id") Long id) {
+        return type==1?
+                NodeUtil.convert2String(painterService.findRelatedPainters(id), painterService.findRelatedPaintings(id)):
+                NodeUtil.convert2String(paintingService.findRelatedPaintings(id));
+        //        ObjectMapper mapper = new ObjectMapper();
 //        return type==1?
 //                mapper.writeValueAsString(painterService.findRelatedPainters(id))+mapper.writeValueAsString(painterService.findRelatedPaintings(id)):
 //                mapper.writeValueAsString(paintingService.findRelatedPaintings(id));
-        if (type ==1) {
-            List<Painter> relatedPainters = painterService.findRelatedPainters(id);
-            for (Painter painter:
-                 relatedPainters) {
-
-            }
-        }
     }
 }

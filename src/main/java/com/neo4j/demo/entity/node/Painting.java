@@ -24,13 +24,7 @@ public class Painting {
     public String toString() {
         return "{" +
                 "id:" + id +
-                ", created_time:" + createdTime +
                 ", name:'" + name + '\'' +
-                ", museum:'" + museum + '\'' +
-                ", picture:'" + picture + '\'' +
-                ", type:'" + type + '\'' +
-                ", sameMuseumPaintings:" + sameMuseumPaintings +
-                ", maker:" + maker +
                 '}';
     }
 
