@@ -13,29 +13,15 @@ public class Painter {
     private Long id;//主键id
     @Property(name = "name")
     private String name;//姓名
-    @Property(name = "country")
     private String country;//国家
-    @Property(name = "birth")
     private int birth;//出生年份
-    @Property(name = "death")
     private int death;//死亡年份
-    @Property(name = "description")
     private String description;//描述
-    @Property(name = "image")
     private String image;//图像
 
-    /**
-     * relations:
-     *  painter SAME_ERA painter
-     */
-
-    @Relationship(type = "SAME_ERA", direction = Relationship.OUTGOING)
-    private List<Painter> sameEraPainters;
-
-    public void addSameEraPainters(List<Painter> painters) {
-        if (this.sameEraPainters == null)
-            this.sameEraPainters = painters;
-    }
+//    @Relationship(type = "SAME_ERA", direction = Relationship.OUTGOING)
+//    private List<Painter> sameEraPainters;
+//
 
     @Override
     public String toString() {
@@ -47,28 +33,27 @@ public class Painter {
                 ", death:'" + death + '\'' +"\n"+
                 ", description:'" + description + '\'' +"\n"+
                 ", image:'" + image + '\'' +"\n"+
-                ", sameEraPainters:" + sameEraPainters +"\n"+
                 '}';
     }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Painter painter = (Painter) o;
-        return Objects.equals(id, painter.id) &&
+        return birth == painter.birth &&
+                death == painter.death &&
+                Objects.equals(id, painter.id) &&
                 Objects.equals(name, painter.name) &&
                 Objects.equals(country, painter.country) &&
-                Objects.equals(birth, painter.birth) &&
-                Objects.equals(death, painter.death) &&
                 Objects.equals(description, painter.description) &&
-                Objects.equals(image, painter.image) &&
-                Objects.equals(sameEraPainters, painter.sameEraPainters);
+                Objects.equals(image, painter.image);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, country, birth, death, description, image, sameEraPainters);
+        return Objects.hash(id, name, country, birth, death, description, image);
     }
 
     public Long getId() {
@@ -127,13 +112,7 @@ public class Painter {
         this.image = image;
     }
 
-    public List<Painter> getSameEraPainters() {
-        return sameEraPainters;
-    }
 
-    public void setSameEraPainters(List<Painter> sameEraPainters) {
-        this.sameEraPainters = sameEraPainters;
-    }
 
     public Painter() {
     }
@@ -146,6 +125,5 @@ public class Painter {
         this.death = death;
         this.description = description;
         this.image = image;
-        this.sameEraPainters = sameEraPainters;
     }
 }
