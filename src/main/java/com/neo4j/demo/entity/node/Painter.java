@@ -16,9 +16,9 @@ public class Painter {
     @Property(name = "country")
     private String country;//国家
     @Property(name = "birth")
-    private Long birth;//出生年份
+    private int birth;//出生年份
     @Property(name = "death")
-    private String death;//死亡年份
+    private int death;//死亡年份
     @Property(name = "description")
     private String description;//描述
     @Property(name = "image")
@@ -95,19 +95,19 @@ public class Painter {
         this.country = country;
     }
 
-    public Long getBirth() {
+    public int getBirth() {
         return birth;
     }
 
-    public void setBirth(Long birth) {
+    public void setBirth(int birth) {
         this.birth = birth;
     }
 
-    public String getDeath() {
+    public int getDeath() {
         return death;
     }
 
-    public void setDeath(String death) {
+    public void setDeath(int death) {
         this.death = death;
     }
 
@@ -138,7 +138,7 @@ public class Painter {
     public Painter() {
     }
 
-    public Painter(Long id, String name, String country, Long birth, String death, String description, String image, List<Painter> sameEraPainters) {
+    public Painter(Long id, String name, String country, int birth, int death, String description, String image, List<Painter> sameEraPainters) {
         this.id = id;
         this.name = name;
         this.country = country;

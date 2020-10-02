@@ -14,25 +14,35 @@ public class Painting {
     @Id
     @GeneratedValue
     private Long id;
-    private int created_time;
+    private int createdTime;
     private String name;
     private String museum;
-    private String makerName;
-    private String painter_name;
     private String picture;
     private String type;
+
+    @Override
+    public String toString() {
+        return "{" +
+                "id:" + id +
+                ", created_time:" + createdTime +
+                ", name:'" + name + '\'' +
+                ", museum:'" + museum + '\'' +
+                ", picture:'" + picture + '\'' +
+                ", type:'" + type + '\'' +
+                ", sameMuseumPaintings:" + sameMuseumPaintings +
+                ", maker:" + maker +
+                '}';
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Painting painting = (Painting) o;
-        return created_time == painting.created_time &&
+        return createdTime == painting.createdTime &&
                 Objects.equals(id, painting.id) &&
                 Objects.equals(name, painting.name) &&
                 Objects.equals(museum, painting.museum) &&
-                Objects.equals(makerName, painting.makerName) &&
-                Objects.equals(painter_name, painting.painter_name) &&
                 Objects.equals(picture, painting.picture) &&
                 Objects.equals(type, painting.type) &&
                 Objects.equals(sameMuseumPaintings, painting.sameMuseumPaintings) &&
@@ -41,7 +51,7 @@ public class Painting {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, created_time, name, museum, makerName, painter_name, picture, type, sameMuseumPaintings, maker);
+        return Objects.hash(id, createdTime, name, museum, picture, type, sameMuseumPaintings, maker);
     }
 
     public Long getId() {
@@ -52,12 +62,12 @@ public class Painting {
         this.id = id;
     }
 
-    public int getCreated_time() {
-        return created_time;
+    public int getCreatedTime() {
+        return createdTime;
     }
 
-    public void setCreated_time(int created_time) {
-        this.created_time = created_time;
+    public void setCreatedTime(int createdTime) {
+        this.createdTime = createdTime;
     }
 
     public String getName() {
@@ -76,21 +86,6 @@ public class Painting {
         this.museum = museum;
     }
 
-    public String getMakerName() {
-        return makerName;
-    }
-
-    public void setMakerName(String makerName) {
-        this.makerName = makerName;
-    }
-
-    public String getPainter_name() {
-        return painter_name;
-    }
-
-    public void setPainter_name(String painter_name) {
-        this.painter_name = painter_name;
-    }
 
     public String getPicture() {
         return picture;
@@ -127,13 +122,11 @@ public class Painting {
     public Painting() {
     }
 
-    public Painting(Long id, int created_time, String name, String museum, String makerName, String painter_name, String picture, String type, List<Painting> sameMuseumPaintings, Painter maker) {
+    public Painting(Long id, int createdTime, String name, String museum, String painter_name, String picture, String type, List<Painting> sameMuseumPaintings, Painter maker) {
         this.id = id;
-        this.created_time = created_time;
+        this.createdTime = createdTime;
         this.name = name;
         this.museum = museum;
-        this.makerName = makerName;
-        this.painter_name = painter_name;
         this.picture = picture;
         this.type = type;
         this.sameMuseumPaintings = sameMuseumPaintings;
