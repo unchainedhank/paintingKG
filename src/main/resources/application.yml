@@ -15,5 +15,10 @@ spring:
           password:
   thymeleaf:
     cache: false
+
 server:
   port: 8080
+
+#classpath表示启用的是哪个配置文件
+logging:
+  config: classpath:log4j2-spring.xml
