@@ -8,6 +8,11 @@ spring:
       uri: bolt://localhost
       username: neo4j
       password: blackarrow1
+    elasticsearch:
+      client:
+        reactive:
+          username:
+          password:
   thymeleaf:
     cache: false
 server:
