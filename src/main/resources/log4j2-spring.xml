@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <properties>
+        <!--日志输出位置-->
+        <property name="LOG_HOME">/Users/unchainedhank/Downloads/logs</property>
+    </properties>
+
+    <Appenders>
+        <!-- 将日志输出到控制台-->
+        <Console name="CONSOLE" target="SYSTEM_OUT">
+            <!--设置日志格式及颜色-->
+            <PatternLayout
+                    pattern="[%style{%d}{bright,green}][%highlight{%p}][%style{%t}{bright,blue}][%style{%C}{bright,yellow}]: %msg%n%style{%throwable}{red}"
+                    disableAnsi="false" noConsoleNoAnsi="false"/>
+        </Console>
+
+        <!-- 将日志输出到文件-->
+        <RollingFile name="FILE-APPENDER"
+                     fileName="${LOG_HOME}/log4j2-demo.log"
+                     filePattern="${LOG_HOME}/log4j2-demo-%d{yyyy-MM-dd}-%i.log">
+            <!--设置日志格式-->
+            <PatternLayout>
+                <pattern>[%d][%p][%t][%C] %m%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <!-- 设置日志文件切分参数 -->
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <!--设置最大存档数-->
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <!-- 根日志设置 -->
+        <Root level="debug">
+            <AppenderRef ref="CONSOLE" level="debug"/>
+            <AppenderRef ref="FILE-APPENDER" level="info"/>
+        </Root>
+        <!--spring日志-->
+        <Logger name="org.springframework" level="info"/>
+        <!-- mybatis日志 -->
+        <Logger name="com.mybatis" level="warn"/>
+    </Loggers>
+</configuration>
