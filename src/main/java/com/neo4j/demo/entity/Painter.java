@@ -1,4 +1,4 @@
-package com.neo4j.demo.entity.node;
+package com.neo4j.demo.entity;
 
 import org.neo4j.ogm.annotation.*;
 import org.springframework.stereotype.Component;

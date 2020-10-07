@@ -1,13 +1,11 @@
 package com.neo4j.demo.repository;
 
-import com.neo4j.demo.entity.node.Painter;
-import com.neo4j.demo.entity.node.Painting;
+import com.neo4j.demo.entity.Painting;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
 import java.util.List;
 
 @Repository

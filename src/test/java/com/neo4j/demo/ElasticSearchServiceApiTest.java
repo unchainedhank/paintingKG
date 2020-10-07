@@ -1,6 +1,6 @@
 package com.neo4j.demo;
 
-import com.neo4j.demo.entity.node.Painter;
+import com.neo4j.demo.entity.Painter;
 import net.minidev.json.JSONObject;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.index.IndexRequest;
@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.Map;
 
 @SpringBootTest
-public class ElasticSearchApiTest {
+public class ElasticSearchServiceApiTest {
     //@Qualifier表明注入的是哪个bean
     @Autowired
     @Qualifier("restHighLevelClient")

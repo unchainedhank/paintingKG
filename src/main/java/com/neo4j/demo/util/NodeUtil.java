@@ -1,7 +1,7 @@
 package com.neo4j.demo.util;
 
-import com.neo4j.demo.entity.node.Painter;
-import com.neo4j.demo.entity.node.Painting;
+import com.neo4j.demo.entity.Painter;
+import com.neo4j.demo.entity.Painting;
 
 import java.util.List;
 

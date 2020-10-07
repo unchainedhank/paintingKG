@@ -1,7 +1,7 @@
 package com.neo4j.demo.service;
 
-import com.neo4j.demo.entity.node.Painter;
-import com.neo4j.demo.entity.node.Painting;
+import com.neo4j.demo.entity.Painter;
+import com.neo4j.demo.entity.Painting;
 import com.neo4j.demo.repository.PainterRepository;
 import org.springframework.stereotype.Service;
 
