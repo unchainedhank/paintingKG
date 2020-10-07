@@ -12,6 +12,7 @@ import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.support.master.AcknowledgedResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
@@ -24,6 +25,7 @@ import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.TermQueryBuilder;
+import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.FetchSourceContext;
 import org.junit.jupiter.api.Test;
@@ -33,6 +35,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 @SpringBootTest
 public class EsTest {
@@ -142,13 +145,23 @@ public class EsTest {
 
     //搜索
     @Test
-    void search() {
+    void search() throws IOException {
         SearchRequest searchRequest = new SearchRequest(painter_index);
         SearchSourceBuilder searchBuilder = new SearchSourceBuilder();
         //QueryBuilders.termQuery() 精确查找
         //QueryBuilders.matchAllQuery() 匹配所有
         TermQueryBuilder queryBuilder = QueryBuilders.termQuery("name", "卡拉瓦乔");
-        searchBuilder.query(queryBuilder);
+        searchBuilder.query(queryBuilder)
+                     .timeout(new TimeValue(60, TimeUnit.SECONDS));
+
+        searchRequest.source(searchBuilder);
+        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+        System.out.println(new ObjectMapper().writeValueAsString(searchResponse.getHits()));
+
+        for (SearchHit documentFields :
+                searchResponse.getHits().getHits()) {
+            System.out.println(documentFields.getSourceAsMap());
+        }
 
     }
 
