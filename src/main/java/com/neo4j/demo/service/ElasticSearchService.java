@@ -1,6 +1,5 @@
 package com.neo4j.demo.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.neo4j.demo.entity.Painter;
 import com.neo4j.demo.entity.Painting;
@@ -16,13 +15,10 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.CreateIndexResponse;
 import org.elasticsearch.client.indices.GetIndexRequest;
-import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.MatchQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,11 +74,17 @@ public class ElasticSearchService {
         return bulk.hasFailures()? "fail" : "success";
     }
 
+    /**
+     * 从neo4j导入painters
+     * @return 成功success
+     * @throws IOException 找不到index
+     */
     public String importAllPainters() throws IOException {
         BulkRequest bulkRequest = new BulkRequest();//批量处理类bulk
         bulkRequest.timeout("10s");
 
         //从neo4j拿出来
+//    l       List<Painter> painters = painterRepo.findLimitPainters(76);
         List<Painter> painters = painterRepo.findLimitPainters(76);
 
         if (!indexExists(PAINTER_INDEX)) {
@@ -100,6 +102,36 @@ public class ElasticSearchService {
         return bulk.hasFailures()? "fail" : "success";
 
     }
+
+    /**
+     * 从neo4j导入paintings
+     * @return 成功success
+     * @throws IOException 找不到index
+     */
+    public String importAllPaintings() throws IOException {
+        BulkRequest bulkRequest = new BulkRequest();//批量处理类bulk
+        bulkRequest.timeout("10s");
+
+        //从neo4j拿出来
+//    l       List<Painter> painters = painterRepo.findLimitPainters(76);
+        List<Painting> paintings = paintingRepo.findLimitPaintings(405);
+
+        if (!indexExists(PAINTING_INDEX)) {
+            indexCreate(PAINTING_INDEX);
+        }
+
+        for (int i = 0; i < paintings.size(); i++) {
+            bulkRequest.add(
+                    new IndexRequest()
+                            .source(new ObjectMapper().writeValueAsString(paintings), XContentType.JSON));
+        }
+
+
+        BulkResponse bulk = restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
+        return bulk.hasFailures()? "fail" : "success";
+
+    }
+
 
     public boolean indexExists(String index) throws IOException {
         GetIndexRequest request = new GetIndexRequest(index);
