@@ -15,7 +15,7 @@ public class Painter {
     @GeneratedValue
     private Long id;//主键id
     @Property(name = "name")
-    @Field(analyzer = "ik_smart")
+    @Field(analyzer = "ik_max_word")
     private String name;//姓名
     private String country;//国家
     private int birth;//出生年份

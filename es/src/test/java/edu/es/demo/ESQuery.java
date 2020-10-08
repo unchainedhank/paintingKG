@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 @SpringBootTest
-public class EsTest {
+public class ESQuery {
     @Resource
     private RestHighLevelClient client;
 
@@ -46,11 +46,13 @@ public class EsTest {
      * Painter:
      *   painter_index: "painter_idx"
      */
-    final static String painter_index = "painter_idx";
+    final static String PAINTER_INDEX = "painter_idx";
+    final static String PAINTING_INDEX = "painting_idx";
+
 
     @Test
     void creatIndex() throws IOException {
-        CreateIndexRequest request = new CreateIndexRequest("ft_idx");
+        CreateIndexRequest request = new CreateIndexRequest(PAINTING_INDEX);
         CreateIndexResponse response = client.indices().create(request, RequestOptions.DEFAULT);
         System.out.println(response);
     }
@@ -64,7 +66,7 @@ public class EsTest {
 
     @Test
     void deleteIndex() throws IOException {
-        DeleteIndexRequest request = new DeleteIndexRequest(painter_index);
+        DeleteIndexRequest request = new DeleteIndexRequest("ft_idx");
         AcknowledgedResponse response = client.indices().delete(request,RequestOptions.DEFAULT);
         System.out.println(response.isAcknowledged());
     }
@@ -72,7 +74,7 @@ public class EsTest {
     @Test
     void addDocument() throws IOException {
         Painter painter = new Painter((long) 123, "马远");
-        IndexRequest request = new IndexRequest(painter_index);
+        IndexRequest request = new IndexRequest(PAINTER_INDEX);
         //设置请求
         request.id("1");
         request.timeout(TimeValue.timeValueSeconds(1));
@@ -89,7 +91,7 @@ public class EsTest {
 
     @Test
     void isExists() throws IOException {
-        GetRequest request = new GetRequest(painter_index, "1");
+        GetRequest request = new GetRequest(PAINTER_INDEX, "1");
         //不获取返回的上下文
         request.fetchSourceContext(new FetchSourceContext(false));
 
@@ -146,7 +148,7 @@ public class EsTest {
     //搜索
     @Test
     void search() throws IOException {
-        SearchRequest searchRequest = new SearchRequest(painter_index);
+        SearchRequest searchRequest = new SearchRequest(PAINTER_INDEX);
         SearchSourceBuilder searchBuilder = new SearchSourceBuilder();
         //QueryBuilders.termQuery() 精确查找
         //QueryBuilders.matchAllQuery() 匹配所有

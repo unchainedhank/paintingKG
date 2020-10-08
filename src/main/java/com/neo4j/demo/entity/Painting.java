@@ -16,9 +16,9 @@ public class Painting {
     @GeneratedValue
     private Long id;
     private int createdTime;//绘画时间
-    @Field(analyzer = "ik_smart")
+    @Field(analyzer = "ik_max_word")
     private String name;//画名
-    @Field(analyzer = "ik_smart")
+    @Field(analyzer = "ik_max_word")
     private String museum;//所在博物馆
     private String picture;//图像url地址
     private String type;//绘画类型

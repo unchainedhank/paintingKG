@@ -36,7 +36,7 @@ public class PaintKGController {
 
     @RequestMapping(value = "/id-graph", headers = {"id","type"}, method = RequestMethod.GET)
     public String findGraphById(@RequestHeader("type") int type, @RequestHeader("id") Long id) {
-        return type==1?
+        return type == 1?
                 NodeUtil.convert2String(painterService.findRelatedPainters(id), painterService.findRelatedPaintings(id)):
                 NodeUtil.convert2String(paintingService.findRelatedPaintings(id));
         //        ObjectMapper mapper = new ObjectMapper();

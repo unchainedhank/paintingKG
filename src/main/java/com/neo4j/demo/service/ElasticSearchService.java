@@ -45,8 +45,8 @@ public class ElasticSearchService {
     /**
      * 数据库常量
      */
-    private static final String PAINTER_INDEX = "painter_idx";//画家
-    private static final String PAINTING_INDEX = "painting_idx";//作品
+    private static final String PAINTER_INDEX = "painter_idx";//画家索引
+    private static final String PAINTING_INDEX = "painting_idx";//作品索引
 
 
     /**
@@ -78,6 +78,29 @@ public class ElasticSearchService {
         return bulk.hasFailures()? "fail" : "success";
     }
 
+    public String importAllPainters() throws IOException {
+        BulkRequest bulkRequest = new BulkRequest();//批量处理类bulk
+        bulkRequest.timeout("10s");
+
+        //从neo4j拿出来
+        List<Painter> painters = painterRepo.findLimitPainters(76);
+
+        if (!indexExists(PAINTER_INDEX)) {
+            indexCreate(PAINTER_INDEX);
+        }
+
+        for (int i = 0; i < painters.size(); i++) {
+            bulkRequest.add(
+                    new IndexRequest()
+                            .source(new ObjectMapper().writeValueAsString(painters), XContentType.JSON));
+        }
+
+
+        BulkResponse bulk = restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
+        return bulk.hasFailures()? "fail" : "success";
+
+    }
+
     public boolean indexExists(String index) throws IOException {
         GetIndexRequest request = new GetIndexRequest(index);
         return restHighLevelClient.indices().exists(request, RequestOptions.DEFAULT);
@@ -93,7 +116,7 @@ public class ElasticSearchService {
         SearchSourceBuilder searchBuilder = new SearchSourceBuilder();
         //QueryBuilders.termQuery() 精确查找
         //QueryBuilders.matchAllQuery() 匹配所有
-        MatchQueryBuilder matchQueryBuilder = QueryBuilders.matchQuery(name, value);
+        MatchQueryBuilder queryBuilder = QueryBuilders.matchQuery(name, value);
 //        TermQueryBuilder queryBuilder = QueryBuilders.termQuery("name", "卡拉瓦乔");
         searchBuilder.query(queryBuilder)
                 .timeout(new TimeValue(60, TimeUnit.SECONDS));
