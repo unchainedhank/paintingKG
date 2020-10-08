@@ -1,17 +1,21 @@
 package com.neo4j.demo.entity;
 
 import org.neo4j.ogm.annotation.*;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 
 @Component
 @NodeEntity(label = "Painter")
+@Document(indexName = "painter_idx")
 public class Painter {
     @Id
     @GeneratedValue
     private Long id;//主键id
     @Property(name = "name")
+    @Field(analyzer = "ik_smart")
     private String name;//姓名
     private String country;//国家
     private int birth;//出生年份
@@ -112,7 +116,7 @@ public class Painter {
     public Painter() {
     }
 
-    public Painter(Long id, String name, String country, int birth, int death, String description, String image, List<Painter> sameEraPainters) {
+    public Painter(Long id, String name, String country, int birth, int death, String description, String image) {
         this.id = id;
         this.name = name;
         this.country = country;

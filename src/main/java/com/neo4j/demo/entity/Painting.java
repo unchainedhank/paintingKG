@@ -4,6 +4,7 @@ import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
+import org.springframework.data.elasticsearch.annotations.Field;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +15,13 @@ public class Painting {
     @Id
     @GeneratedValue
     private Long id;
-    private int createdTime;
-    private String name;
-    private String museum;
-    private String picture;
-    private String type;
+    private int createdTime;//绘画时间
+    @Field(analyzer = "ik_smart")
+    private String name;//画名
+    @Field(analyzer = "ik_smart")
+    private String museum;//所在博物馆
+    private String picture;//图像url地址
+    private String type;//绘画类型
 
     @Override
     public String toString() {

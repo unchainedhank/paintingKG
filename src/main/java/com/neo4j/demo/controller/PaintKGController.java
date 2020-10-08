@@ -1,6 +1,7 @@
 package com.neo4j.demo.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.neo4j.demo.service.ElasticSearchService;
 import com.neo4j.demo.service.PainterService;
 import com.neo4j.demo.service.PaintingService;
 import com.neo4j.demo.util.NodeUtil;
@@ -15,6 +16,8 @@ public class PaintKGController {
     private PainterService painterService;
     @Resource
     private PaintingService paintingService;
+    @Resource
+    private ElasticSearchService searchService;
 
     @RequestMapping(value = "/type", headers = "type", method = RequestMethod.GET)
     public List recentNode(@RequestHeader("type") int type) {

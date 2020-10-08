@@ -9,19 +9,29 @@ import com.neo4j.demo.repository.PaintingRepository;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.CreateIndexResponse;
 import org.elasticsearch.client.indices.GetIndexRequest;
 import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.TermQueryBuilder;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class ElasticSearchService {
@@ -76,6 +86,27 @@ public class ElasticSearchService {
     public void indexCreate(String index) throws IOException {
         CreateIndexRequest request = new CreateIndexRequest(index);
         CreateIndexResponse response = restHighLevelClient.indices().create(request, RequestOptions.DEFAULT);
+    }
+
+    public void search(String index, String name, String value) throws IOException {
+        SearchRequest searchRequest = new SearchRequest(index);
+        SearchSourceBuilder searchBuilder = new SearchSourceBuilder();
+        //QueryBuilders.termQuery() 精确查找
+        //QueryBuilders.matchAllQuery() 匹配所有
+        MatchQueryBuilder matchQueryBuilder = QueryBuilders.matchQuery(name, value);
+//        TermQueryBuilder queryBuilder = QueryBuilders.termQuery("name", "卡拉瓦乔");
+        searchBuilder.query(queryBuilder)
+                .timeout(new TimeValue(60, TimeUnit.SECONDS));
+
+        searchRequest.source(searchBuilder);
+        SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+        System.out.println(new ObjectMapper().writeValueAsString(searchResponse.getHits()));
+
+        for (SearchHit documentFields :
+                searchResponse.getHits().getHits()) {
+            System.out.println(documentFields.getSourceAsMap());
+        }
+
     }
 
 }
