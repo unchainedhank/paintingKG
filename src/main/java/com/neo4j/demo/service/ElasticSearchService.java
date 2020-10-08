@@ -23,20 +23,22 @@ import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-@Component
+@Service
 public class ElasticSearchService {
-    @Autowired
+    @Resource
     private RestHighLevelClient restHighLevelClient;
     @Resource
     private PainterRepository painterRepo;
     @Resource
     private PaintingRepository paintingRepo;
+
 
     /**
      * 数据库常量
@@ -91,10 +93,12 @@ public class ElasticSearchService {
             indexCreate(PAINTER_INDEX);
         }
 
-        for (int i = 0; i < painters.size(); i++) {
-            bulkRequest.add(
-                    new IndexRequest()
-                            .source(new ObjectMapper().writeValueAsString(painters), XContentType.JSON));
+        ObjectMapper mapper = new ObjectMapper();
+
+        for (Painter painter : painters) {
+                bulkRequest.add(
+                    new IndexRequest(PAINTER_INDEX)
+                            .source(mapper.writeValueAsString(painter), XContentType.JSON));
         }
 
 

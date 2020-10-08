@@ -10,5 +10,9 @@ spring:
       password: blackarrow1
   thymeleaf:
     cache: false
+  main:
+    allow-bean-definition-overriding: true
 server:
   port: 8080
+
+
