@@ -118,7 +118,7 @@ public class ElasticSearchService {
 
         //从neo4j拿出来
 //    l       List<Painter> painters = painterRepo.findLimitPainters(76);
-        List<Painting> paintings = paintingRepo.findLimitPaintings(405);
+        List<Painting> paintings = paintingRepo.findLimitPaintings(326);
 
         if (!indexExists(PAINTING_INDEX)) {
             indexCreate(PAINTING_INDEX);
@@ -169,8 +169,10 @@ public class ElasticSearchService {
 
         ArrayList<Map<String, Object>> entities = new ArrayList<>();
 
+
+
         for (SearchHit documentFields :
-                searchResponse.getHits().getHits()) {
+                searchResponse.getHits()) {
             entities.add(documentFields.getSourceAsMap());
         }
         return entities;

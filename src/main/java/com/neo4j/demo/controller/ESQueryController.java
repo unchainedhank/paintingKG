@@ -41,6 +41,10 @@ public class ESQueryController {
 
     }
 
+    @RequestMapping("/import/paintings")
+    public void importPaintings() throws IOException {
+        searchService.importAllPaintings();
+    }
 
 
 }
