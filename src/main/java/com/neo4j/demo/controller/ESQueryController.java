@@ -32,12 +32,13 @@ public class ESQueryController {
         searchService.importAllPainters();
     }
 
-    @RequestMapping(value = "/search/{index}/{document}/{value}", method = RequestMethod.GET)
-    public ArrayList<Map<String, Object>> searchPainterByName(@PathVariable String index, @PathVariable String document, @PathVariable String value) throws IOException {
-        return searchService.search(index, document, value);
-        /**
-         * (String index, String name, String value)
-         */
+    @RequestMapping(value = "/search/{index}/{keyword}/{pageNo}/{pageSize}", method = RequestMethod.GET)
+    public ArrayList<Map<String, Object>> searchPainterByName(@PathVariable String index,
+                                                              @PathVariable String keyword,
+                                                              @PathVariable int pageNo,
+                                                              @PathVariable int pageSize) throws IOException {
+        return searchService.search(index, keyword, pageNo, pageSize);
+
     }
 
 

@@ -149,25 +149,31 @@ public class ElasticSearchService {
 
 
 
-    public ArrayList<Map<String, Object>> search(String index, String name, Object value) throws IOException {
+    public ArrayList<Map<String, Object>> search(String index, String keyword, int pageNo, int pageSize) throws IOException {
 
         SearchRequest searchRequest = new SearchRequest(index);
+
         //QueryBuilders.termQuery() 精确查找
         //QueryBuilders.matchAllQuery() 匹配所有
-        MatchQueryBuilder queryBuilder = QueryBuilders.matchQuery(name, value);
-//        TermQueryBuilder queryBuilder = QueryBuilders.termQuery("name", "卡拉瓦乔");
+        MatchQueryBuilder queryBuilder = QueryBuilders.matchQuery("name", keyword);
 
-        searchRequest.source(new SearchSourceBuilder().query(queryBuilder)
-                                                       .timeout(new TimeValue(60, TimeUnit.SECONDS)));
+        SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+        searchRequest.source(sourceBuilder.query(queryBuilder)
+                                            .timeout(new TimeValue(60, TimeUnit.SECONDS)));
+
+        //分页
+        sourceBuilder.from(pageNo);
+        sourceBuilder.size(pageSize);
+
         SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
 
-        ArrayList<Map<String, Object>> nodes = new ArrayList<>();
+        ArrayList<Map<String, Object>> entities = new ArrayList<>();
 
         for (SearchHit documentFields :
                 searchResponse.getHits().getHits()) {
-            nodes.add(documentFields.getSourceAsMap());
+            entities.add(documentFields.getSourceAsMap());
         }
-        return nodes;
+        return entities;
 
     }
 
