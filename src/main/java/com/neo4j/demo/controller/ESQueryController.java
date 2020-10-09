@@ -27,10 +27,10 @@ public class ESQueryController {
      * 导入所有画家的数据
      * @throws IOException 找不到service
      */
-    @RequestMapping("/import/painters")
-    public void importContent() throws IOException {
-        searchService.importAllPainters();
-    }
+//    @RequestMapping("/import/painters")
+//    public void importContent() throws IOException {
+//        searchService.importAllPainters();
+//    }
 
     @RequestMapping(value = "/search/{index}/{keyword}/{pageNo}/{pageSize}", method = RequestMethod.GET)
     public ArrayList<Map<String, Object>> searchPainterByName(@PathVariable String index,
@@ -41,10 +41,10 @@ public class ESQueryController {
 
     }
 
-    @RequestMapping("/import/paintings")
-    public void importPaintings() throws IOException {
-        searchService.importAllPaintings();
-    }
+//    @RequestMapping("/import/paintings")
+//    public void importPaintings() throws IOException {
+//        searchService.importAllPaintings();
+//    }
 
 
 }

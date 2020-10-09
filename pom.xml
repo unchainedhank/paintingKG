@@ -36,25 +36,20 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+<!--swagger2文档-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.6.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.6.1</version>
+        </dependency>
 
 
-<!--        <dependency>-->
-<!--            <groupId>org.neo4j</groupId>-->
-<!--            <artifactId>neo4j</artifactId>-->
-<!--            <version>3.2.9</version>-->
-<!--            <scope>runtime</scope>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.neo4j</groupId>-->
-<!--            <artifactId>neo4j-ogm-embedded-driver</artifactId>-->
-<!--            <version>${neo4j-ogm.version}</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.neo4j</groupId>-->
-<!--            <artifactId>neo4j-ogm-bolt-driver</artifactId>-->
-<!--            <version>${neo4j-ogm.version}</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
