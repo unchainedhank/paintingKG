@@ -21,13 +21,13 @@ import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -147,24 +147,27 @@ public class ElasticSearchService {
         CreateIndexResponse response = restHighLevelClient.indices().create(request, RequestOptions.DEFAULT);
     }
 
-    public void search(String index, String name, String value) throws IOException {
+
+
+    public ArrayList<Map<String, Object>> search(String index, String name, Object value) throws IOException {
+
         SearchRequest searchRequest = new SearchRequest(index);
-        SearchSourceBuilder searchBuilder = new SearchSourceBuilder();
         //QueryBuilders.termQuery() 精确查找
         //QueryBuilders.matchAllQuery() 匹配所有
         MatchQueryBuilder queryBuilder = QueryBuilders.matchQuery(name, value);
 //        TermQueryBuilder queryBuilder = QueryBuilders.termQuery("name", "卡拉瓦乔");
-        searchBuilder.query(queryBuilder)
-                .timeout(new TimeValue(60, TimeUnit.SECONDS));
 
-        searchRequest.source(searchBuilder);
+        searchRequest.source(new SearchSourceBuilder().query(queryBuilder)
+                                                       .timeout(new TimeValue(60, TimeUnit.SECONDS)));
         SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-        System.out.println(new ObjectMapper().writeValueAsString(searchResponse.getHits()));
+
+        ArrayList<Map<String, Object>> nodes = new ArrayList<>();
 
         for (SearchHit documentFields :
                 searchResponse.getHits().getHits()) {
-            System.out.println(documentFields.getSourceAsMap());
+            nodes.add(documentFields.getSourceAsMap());
         }
+        return nodes;
 
     }
 
