@@ -124,10 +124,12 @@ public class ElasticSearchService {
             indexCreate(PAINTING_INDEX);
         }
 
-        for (int i = 0; i < paintings.size(); i++) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        for (Painting painting : paintings) {
             bulkRequest.add(
-                    new IndexRequest()
-                            .source(new ObjectMapper().writeValueAsString(paintings), XContentType.JSON));
+                    new IndexRequest(PAINTING_INDEX)
+                            .source(mapper.writeValueAsString(painting), XContentType.JSON));
         }
 
 
