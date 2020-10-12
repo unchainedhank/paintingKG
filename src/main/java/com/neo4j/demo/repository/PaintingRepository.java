@@ -30,6 +30,6 @@ public interface PaintingRepository extends Neo4jRepository<Painting,Long> {
     //创建描述
     @Transactional
     @Query("MATCH (p : Painting) WHERE id(p)={id} SET p.description={description} RETURN p;")
-    String savePaintingDescription(@Param("id") Long id, @Param("description") String description);
+    Painting savePaintingDescription(@Param("id") Long id, @Param("description") String description);
 
 }

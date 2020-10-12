@@ -1,5 +1,6 @@
 package com.neo4j.demo.controller;
 
+import com.neo4j.demo.entity.Painting;
 import com.neo4j.demo.service.ElasticSearchService;
 import com.neo4j.demo.service.PainterService;
 import com.neo4j.demo.service.PaintingService;
@@ -89,7 +90,7 @@ public class PaintKGController {
 
 
     @RequestMapping(value = "/painting-des", headers = {"id", "des"}, method = RequestMethod.POST)
-    public String addPaintingDescription(@RequestHeader("id") Long id, @RequestHeader("des") String des) {
+    public Painting addPaintingDescription(@RequestHeader("id") Long id, @RequestHeader("des") String des) {
         return paintingService.savePaintingDescription(id, des);
     }
 

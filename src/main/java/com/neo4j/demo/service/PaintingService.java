@@ -30,7 +30,7 @@ public class PaintingService {
         return repository.findRelatedPaintingsById(id);
     }
 
-    public String savePaintingDescription(Long id, String description) {
+    public Painting savePaintingDescription(Long id, String description) {
         return repository.savePaintingDescription(id, description);
     }
 
