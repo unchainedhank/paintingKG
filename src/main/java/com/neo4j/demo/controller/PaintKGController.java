@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -89,8 +90,9 @@ public class PaintKGController {
     }
 
 
-    @RequestMapping(value = "/painting-des", headers = {"id", "des"}, method = RequestMethod.POST)
-    public Painting addPaintingDescription(@RequestHeader("id") Long id, @RequestHeader("des") String des) {
+    @RequestMapping(value = "/add-painting-des", method = RequestMethod.POST)
+    public Painting addPaintingDescription(@RequestParam("id") Long id,
+                                           @RequestParam("des") String des) {
         return paintingService.savePaintingDescription(id, des);
     }
 
