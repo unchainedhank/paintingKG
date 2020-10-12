@@ -2,6 +2,8 @@ package com.neo4j.demo.service;
 
 import com.neo4j.demo.entity.Painting;
 import com.neo4j.demo.repository.PaintingRepository;
+import org.springframework.data.neo4j.annotation.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,6 +28,10 @@ public class PaintingService {
 
     public List<Painting> findRelatedPaintings(Long id) {
         return repository.findRelatedPaintingsById(id);
+    }
+
+    public String savePaintingDescription(Long id, String description) {
+        return repository.savePaintingDescription(id, description);
     }
 
 

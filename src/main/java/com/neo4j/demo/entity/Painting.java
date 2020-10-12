@@ -42,13 +42,12 @@ public class Painting {
                 Objects.equals(museum, painting.museum) &&
                 Objects.equals(picture, painting.picture) &&
                 Objects.equals(type, painting.type) &&
-                Objects.equals(sameMuseumPaintings, painting.sameMuseumPaintings) &&
                 Objects.equals(maker, painting.maker);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createdTime, name, museum, picture, type, sameMuseumPaintings, maker);
+        return Objects.hash(id, createdTime, name, museum, picture, type, maker);
     }
 
     public Long getId() {
@@ -100,13 +99,8 @@ public class Painting {
         this.type = type;
     }
 
-    public List<Painting> getSameMuseumPaintings() {
-        return sameMuseumPaintings;
-    }
 
-    public void setSameMuseumPaintings(List<Painting> sameMuseumPaintings) {
-        this.sameMuseumPaintings = sameMuseumPaintings;
-    }
+
 
     public Painter getMaker() {
         return maker;
@@ -126,7 +120,6 @@ public class Painting {
         this.museum = museum;
         this.picture = picture;
         this.type = type;
-        this.sameMuseumPaintings = sameMuseumPaintings;
         this.maker = maker;
     }
 
@@ -136,8 +129,7 @@ public class Painting {
      *  painting MADE_BY painter
      */
 
-    @Relationship(type = "SAME_MUSEUM", direction = Relationship.OUTGOING)
-    private List<Painting> sameMuseumPaintings;
+
 
     @Relationship(type = "MADE_BY", direction = Relationship.OUTGOING)
     private Painter maker;
@@ -147,10 +139,6 @@ public class Painting {
             this.maker = painter;
     }
 
-    public void addSameMuseumPainting(Painting painting) {
-        if (this.sameMuseumPaintings == null)
-            this.sameMuseumPaintings = new ArrayList<Painting>();
-        this.sameMuseumPaintings.add(painting);
-    }
+
 
 }

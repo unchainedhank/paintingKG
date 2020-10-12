@@ -5,6 +5,7 @@ import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,6 +27,9 @@ public interface PaintingRepository extends Neo4jRepository<Painting,Long> {
     @Query("MATCH (p1 : Painting)-[]-(p2: Painting) WHERE id(p1)={id} RETURN p1,p2;")
     List<Painting> findRelatedPaintingsById(@Param("id") Long id);
 
-
+    //创建描述
+    @Transactional
+    @Query("MATCH (p : Painting) WHERE id(p)={id} SET p.description={description} RETURN p;")
+    String savePaintingDescription(@Param("id") Long id, @Param("description") String description);
 
 }

@@ -86,4 +86,11 @@ public class PaintKGController {
 //                mapper.writeValueAsString(painterService.findRelatedPainters(id))+mapper.writeValueAsString(painterService.findRelatedPaintings(id)):
 //                mapper.writeValueAsString(paintingService.findRelatedPaintings(id));
     }
+
+
+    @RequestMapping(value = "/painting-des", headers = {"id", "des"}, method = RequestMethod.POST)
+    public String addPaintingDescription(@RequestHeader("id") Long id, @RequestHeader("des") String des) {
+        return paintingService.savePaintingDescription(id, des);
+    }
+
 }
