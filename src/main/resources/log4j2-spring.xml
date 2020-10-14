@@ -2,7 +2,7 @@
 <configuration>
     <properties>
         <!--日志输出位置-->
-        <property name="LOG_HOME">/Users/unchainedhank/Downloads/logs</property>
+        <property name="LOG_HOME">/home/pani/logs</property>
     </properties>
 
     <Appenders>
