@@ -17,6 +17,8 @@ import java.util.List;
 
 @RestController
 @Api(value = "对知识图谱的crud", tags = "查询画家或画作")
+
+//文档地址：http://localhost:8080/swagger-ui.html
 public class PaintKGController {
     @Resource
     private PainterService painterService;
