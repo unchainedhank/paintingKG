@@ -6,6 +6,12 @@ A knowledgeGraph about famous paintings and painters.
 
 使用==Neo4j==做存储,==Spring Boot==启动,Spring Data Neo4j封装,Elastic Search做搜索,maven做依赖管理,swagger2做api测试和文档,前端使用Element UI和VUE
 
+**项目实例**
+![1](https://i.loli.net/2020/11/25/FPyHK81lViBOtEN.png)
+![2](https://i.loli.net/2020/11/25/29ygqD7HlbPCnNV.png)
+![3](https://i.loli.net/2020/11/25/USadwWTuGxcQNAq.png)
+
+
 ## 使用方法 How to Use
 
 **Download zip**
